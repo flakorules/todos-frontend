@@ -1,7 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
+import { useEffect } from 'react';
 
-function App() {
+
+function  App() {
+
+  useEffect(() => {
+    loadData();
+  }, [])
+
+  const  loadData = async () => {
+    const resp = await fetch("http://flakorules-001-site1.itempurl.com/todos-backend/api/User/anita");
+    const data = await resp.json();
+    console.log(data);  
+  }
+  
+
   return (
     <div className="App">
       <header className="App-header">
