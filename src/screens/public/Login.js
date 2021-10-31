@@ -54,7 +54,7 @@ export const Login = () => {
                   type="text"
                 />
                 {errors.userName && (
-                  <div class="alert alert-danger mt-1" role="alert">
+                  <div class="alert alert-danger mt-1 p-1" role="alert">
                     UserName is required
                   </div>
                 )}
@@ -73,7 +73,7 @@ export const Login = () => {
                   type="password"
                 />
                 {errors.password && (
-                  <div class="alert alert-danger mt-1" role="alert">
+                  <div class="alert alert-danger mt-1 p-1" role="alert">
                     Password is required
                   </div>
                 )}

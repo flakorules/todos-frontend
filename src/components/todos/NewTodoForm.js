@@ -9,6 +9,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave } from "@fortawesome/free-solid-svg-icons";
 import { faWindowClose } from "@fortawesome/free-regular-svg-icons";
+import Swal from "sweetalert2";
 
 export const NewTodoForm = () => {
   const dispatch = useDispatch();
@@ -23,9 +24,19 @@ export const NewTodoForm = () => {
   });
 
   const onSubmit = (data) => {
-    dispatch(startAddTodo(data));
-    dispatch(setFlagEditedTodo(false));
-    dispatch(setFlagNewTodo(false));
+    Swal.fire({
+      title: `¿Desea agregar el todo?`,
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText: `Si, agregar`,
+      cancelButtonText: `No`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(startAddTodo(data));
+        dispatch(setFlagEditedTodo(false));
+        dispatch(setFlagNewTodo(false));
+      }
+    });
   };
 
   const onResetClick = () => {
@@ -37,31 +48,39 @@ export const NewTodoForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="row">
-        <div className="col mb-3">
+        <div className="col pb-3">
           <input
+            placeholder="Titulo"
             type="text"
             className="form-control"
             {...register("name", { required: true })}
           />
           {errors.name && (
-            <div className="alert alert-danger mt-1" role="alert">
+            <div className="alert alert-danger p-1 mt-2" role="alert">
               Name is required
             </div>
           )}
         </div>
-        <div className="col mb-3">
+      </div>
+
+      <div className="row">
+        <div className="col pb-3">
           <input
+            placeholder="Descripción"
             type="text"
             className="form-control"
             {...register("description", { required: true })}
           />
 
           {errors.description && (
-            <div className="alert alert-danger mt-1" role="alert">
+            <div className="alert alert-danger p-1 mt-2" role="alert">
               Description is required
             </div>
           )}
         </div>
+      </div>
+
+      <div className="row">
         <div className="col">
           <button type="submit" className="btn btn-primary mx-2">
             <FontAwesomeIcon icon={faSave} />

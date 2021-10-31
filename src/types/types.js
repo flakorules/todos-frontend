@@ -9,5 +9,7 @@ export const types = {
   deleteTodo: "[todos] Delete",
   setEditedTodo: "[todos] Set Edited",
   setFlagNewTodo: "[todos] Set Flag New Todo",
-  setFlagEditedTodo: "[todos] Set Flag Edited Todo"
+  setFlagEditedTodo: "[todos] Set Flag Edited Todo",
+
+  setFlagShowLoading: "[ui] Set Flag Show Loading"
 };

@@ -2,10 +2,12 @@ import Swal from "sweetalert2";
 import { fetchNoToken } from "../helpers/fetch";
 import { formatResponseError } from "../helpers/formatErrors";
 import { types } from "../types/types";
+import { setFlagShowLoading } from "./ui.action";
 
 export const startLogin = (formData) => {
   return async (dispatch) => {
     try {
+      dispatch(setFlagShowLoading(true));
       const response = await fetchNoToken(
         "User/authenticate",
         formData,
@@ -32,6 +34,7 @@ export const startLogin = (formData) => {
           confirmButtonText: "Aceptar",
         });
       }
+      dispatch(setFlagShowLoading(false));
     } catch (error) {
       Swal.fire({
         icon: "error",

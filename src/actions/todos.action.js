@@ -1,5 +1,6 @@
 import { fetchWithToken } from "../helpers/fetch";
 import { types } from "../types/types";
+import { setFlagShowLoading } from "./ui.action";
 
 export const startViewMyTodos = () => {
   return async (dispatch, getState) => {
@@ -15,28 +16,34 @@ export const startViewMyTodos = () => {
 
 export const startSolveTodo = (todoId) => {
   return async (dispatch) => {
+    dispatch(setFlagShowLoading(true));
     const response = await fetchWithToken(`Todo/${todoId}`, {}, "PATCH");
     const { errorCode, message, data } = await response.json();
 
     if (errorCode === "000") {
       dispatch(solveTodo(todoId));
     }
+
+    dispatch(setFlagShowLoading(false));
   };
 };
 
 export const startDeleteTodo = (todoId) => {
   return async (dispatch) => {
+    dispatch(setFlagShowLoading(true));
     const response = await fetchWithToken(`Todo/${todoId}`, {}, "DELETE");
     const { errorCode, message, data } = await response.json();
 
     if (errorCode === "000") {
       dispatch(deleteTodo(todoId));
     }
+    dispatch(setFlagShowLoading(false));
   };
 };
 
 export const startEditTodo = (formData) => {
   return async (dispatch) => {
+    dispatch(setFlagShowLoading(true));
     const response = await fetchWithToken(
       `Todo/${formData.todoId}`,
       formData,
@@ -49,17 +56,20 @@ export const startEditTodo = (formData) => {
     }
 
     dispatch(resetEditedTodo());
+    dispatch(setFlagShowLoading(false));
   };
 };
 
 export const startAddTodo = (formData) => {
   return async (dispatch) => {
+    dispatch(setFlagShowLoading(true));
     const response = await fetchWithToken("Todo", formData, "POST");
     const { errorCode, message, data } = await response.json();
 
     if (errorCode === "000") {
       dispatch(addTodo(data));
     }
+    dispatch(setFlagShowLoading(false));
   };
 };
 

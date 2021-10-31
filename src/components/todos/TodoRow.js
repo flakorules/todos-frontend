@@ -2,6 +2,7 @@ import { faPenAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 import {
   setEditedTodo,
   setFlagEditedTodo,
@@ -18,7 +19,17 @@ export const TodoRow = ({ todo }) => {
   };
 
   const onHandleDeleteClick = () => {
-    dispatch(startDeleteTodo(todo.todoId));
+    Swal.fire({
+      title: `¿Desea eliminar el todo?`,
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText: `Si, eliminar`,
+      cancelButtonText: `No`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(startDeleteTodo(todo.todoId));
+      }
+    });
   };
 
   const onHandleEditClick = () => {
@@ -28,7 +39,7 @@ export const TodoRow = ({ todo }) => {
   };
 
   return (
-    <tr>
+    <tr className="animate__fadeOutUp">
       <td>{todo.name}</td>
       <td>{todo.description}</td>
       <td>
